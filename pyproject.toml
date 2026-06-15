@@ -1,0 +1,13 @@
+[tool.black]
+line-length = 88
+target-version = ['py310']  # Версия Python проекта
+include = '\.pyi?$'    # Какие файлы форматировать (.py и .pyi)
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.venv
+  | build
+  | dist
+)/
+'''

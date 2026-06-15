@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="static/css/report.css">
+</head>
+  <header class="report-header">
+    <h1 class="hospital-name">
+      {{ report.hospital.name }}{% if report.hospital.number %} №{{ report.hospital.number }}{% endif %}
+    </h1>
+    <p class="hospital-address">
+      Адрес: {{ report.hospital.address.country_name }},
+      {{ report.hospital.address.city_name }},
+      {{ report.hospital.address.street_name }},
+      {{ report.hospital.address.building_number }},
+      {{ report.hospital.address.postal_code }}
+    </p>
+    <p class="department">Кабинет озоновой физиотерапии</p>
+    <p class="report-date">Дата создания реестровой ведомости: {{ date }}</p>
+    <p class="report-title"><b>Реестровая ведомость больного</b></p>
+  </header>
+  
+  <section class="patient-doctor-info">
+    <div class="patient-info card">
+      <h2>Пациент</h2>
+      <p><b>Реестровый номер:</b> {{ report.patient.id }}</p>
+      <p><b>ФИО:</b> {{ report.patient.middle_name }} {{ report.patient.first_name }} {{ report.patient.last_name }}</p>
+      <p><b>Телефон:</b> {{ report.patient.phone }}</p>
+      <p><b>Email:</b> {{ report.patient.email if report.patient.email else '-' }}</p>
+      <p><b>Дата рождения:</b> {{ report.patient.date_of_birth }}</p>
+    </div>
+  
+    <div class="doctor-info card">
+      <h2>Врач</h2>
+      <p><b>ФИО:</b> {{ report.doctor.user.middle_name }} {{ report.doctor.user.first_name }} {{
+        report.doctor.user.last_name }}</p>
+      <p><b>Телефон:</b> {{ report.doctor.user.phone }}</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>Выписка</h2>
+      <p><b>Диагноз:</b> {{ report.diagnose.name }}</p>
+      <p><b>Планируемое количество сеансов:</b> {{ report.planned_session_count }}</p>
+      <p>
+        <b>Проведенное количество сеансов:</b> {{ report.session | length }}{% if report.session %}
+          , за период с {{ report.session[0].created_at }} по {{ report.session[-1].updated_at }}{% endif %}
+      </p>
+        </div>
+  </section>
+
+  <section class="sessions">
+    <h2 class="section-title">Сеансы</h2>
+    <table class="session-table">
+      <thead>
+        <tr>
+          <th>Реестровый номер</th>
+          <th>Дата начала</th>
+          <th>Дата окончания</th>
+          <th>Концентрация озона (mg/l)</th>
+          <th>Длительность</th>
+          <th>Номер поста</th>
+          <th>Номер кабинета</th>
+          <th>ФИО медсестры</th>
+          <th>Статус</th>
+          </tr>
+          </thead>
+          <tbody>
+        {% for row in report.session %}
+        <tr>
+          <td>{{ row.id }}</td>
+          <td>{{ row.created_at }}</td>
+          <td>{{ row.updated_at if row.updated_at else '-' }}</td>
+          <td>{{ row.ozone_concentration }}</td>
+          <td>{{ row.session_duration_ms }}</td>
+          <td>{{ row.post.number }}</td>
+          <td>{{ row.post.cabinet.number }}</td>
+          <td>
+            {% if row.nurse %}
+            {{ row.nurse.user.middle_name }} {{ row.nurse.user.first_name }} {{ row.nurse.user.last_name }}
+            {% else %}
+            Нет
+            {% endif %}
+          </td>
+          <td>{{ "активен" if row.is_active else "завершен" }}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+          </table>
+  </section>
+</body>
+</html>

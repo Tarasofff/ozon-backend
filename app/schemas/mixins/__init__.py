@@ -1,0 +1,1 @@
+from app.schemas.mixins.password_hash_mixin import PasswordHashMixin

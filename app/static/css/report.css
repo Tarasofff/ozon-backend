@@ -1,0 +1,113 @@
+@page {
+  size: A4;
+  margin: 20mm 15mm;
+}
+
+body {
+  font-family: DejaVu Sans, sans-serif;
+  font-size: 10pt;
+  color: #222;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ---------- Заголовок документа ---------- */
+.report-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.hospital-name {
+  margin: 0;
+  font-size: 16pt;
+    font-weight: bold;
+}
+
+.hospital-address,
+.department,
+.report-date,
+.report-title {
+  margin: 3px 0;
+  font-size: 10pt;
+}
+
+/* ---------- Карточки пациента и врача ---------- */
+.patient-doctor-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.card {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.card h2 {
+  font-size: 12pt;
+  margin-top: 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+}
+
+.card p {
+  margin: 4px 0;
+  font-size: 9pt;
+}
+
+/* ---------- Таблица ---------- */
+.sessions {
+  page-break-before: always;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 14pt;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.session-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 9pt;
+}
+
+.session-table th,
+.session-table td {
+  border: 1px solid #555;
+  padding: 4px 6px;
+  text-align: center;
+  vertical-align: middle;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.session-table thead th {
+  background-color: #e6e6e6;
+  font-size: 8pt;
+  font-weight: bold;
+  text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.session-table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.session-table tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+/* Автоадаптивный текст */
+.session-table td,
+.session-table th {
+  font-size: clamp(7pt, 1vw, 9pt);
+}

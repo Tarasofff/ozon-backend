@@ -1,0 +1,9 @@
+{
+    "typeCheckingMode": "strict",
+    "reportMissingTypeStubs": true,
+    "reportMissingImports": true,
+    "strictListInference": true,
+    "strictFunctionTypes": true,
+    "reportUndefinedVariable": "warning",
+    "reportUnusedImport": "warning"
+}

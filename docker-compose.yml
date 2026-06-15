@@ -1,0 +1,54 @@
+services:
+  database:
+    container_name: database
+    image: postgres:17
+    env_file:
+      - .env
+    ports:
+      - 5555:5432
+    volumes:
+      - ../pgdata/:/var/lib/postgresql/data
+    restart: always
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+        max-file: 2
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: always
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+        max-file: 2    
+    volumes:
+      - ./:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 8G      
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

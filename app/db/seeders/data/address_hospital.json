@@ -1,0 +1,28 @@
+[
+  {
+    "country_name": "Украина",
+    "city_name": "Харьков",
+    "street_name":"Проспект Независимости",
+    "building_number": "1",
+    "postal_code": "61177",
+    "hospital": [
+      {
+        "name": "Харківська Обласна Клінічна Лікарня",
+        "number": 1,
+        "cabinet": [
+          {
+            "number": "13A",
+            "post": [
+              {
+                "number": 1
+              },
+              {
+                "number": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
