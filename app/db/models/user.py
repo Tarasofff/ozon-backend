@@ -1,7 +1,7 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
-from sqlalchemy import Boolean, ForeignKey, Integer, String, Date, text
+from sqlalchemy import Boolean, ForeignKey, Integer, String, Date, true
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import date
 from app.db.models.base import Base
@@ -29,19 +29,19 @@ class User(IdIntPkMixin, TimestampMixin, Base):
         index=True,
     )
 
-    email: Mapped[str] = mapped_column(String(length=320), nullable=True)
+    email: Mapped[Optional[str]] = mapped_column(String(length=320), nullable=True)
 
     date_of_birth: Mapped[date] = mapped_column(Date, nullable=False)
 
     is_active: Mapped[bool] = mapped_column(
-        Boolean, default=True, nullable=False, server_default=text("true")
+        Boolean, default=True, nullable=False, server_default=true()
     )
 
     password: Mapped[str] = mapped_column(String(length=1024), nullable=False)
 
-    nurse: Mapped[Nurse] = relationship(back_populates="user")
+    nurse: Mapped[Nurse] = relationship(back_populates="user", uselist=False)
 
-    doctor: Mapped[Doctor] = relationship(back_populates="user")
+    doctor: Mapped[Doctor] = relationship(back_populates="user", uselist=False)
 
     role_id: Mapped[int] = mapped_column(
         Integer, ForeignKey(f"{TableNames.ROLE}.id"), nullable=False
