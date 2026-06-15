@@ -7,7 +7,7 @@ from app.db.session import get_session
 from app.repository import PatientRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.schemas.patient import PatientCreateSchema
+from app.schemas.patient import PatientCreate
 
 
 def get_patient_repo(
@@ -26,7 +26,7 @@ async def check_patient_exists_by_id(
 
 
 async def check_patient_exists_by_phone(
-    patient_data: PatientCreateSchema,
+    patient_data: PatientCreate,
     patient_repo: PatientRepository = Depends(get_patient_repo),
 ):
     phone = patient_data.model_dump()["phone"]

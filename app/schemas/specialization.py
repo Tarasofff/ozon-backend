@@ -1,20 +1,17 @@
-from typing import Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
+from .shared import PaginatedResponse
+from .shared import BaseRead
 
 
-class DoctorSpecializationBaseSchema(BaseModel):
+class DoctorSpecializationBase(BaseModel):
+    name: str
+
+
+class DoctorSpecializationRead(BaseRead, DoctorSpecializationBase):
     pass
 
 
-class DoctorSpecializationReadSchema(DoctorSpecializationBaseSchema):
-    id: int
-    name: str
-
-    model_config = ConfigDict(from_attributes=True)
-
-
-class DoctorsSpecializationsResponseSchema(BaseModel):
-    data: Optional[list[DoctorSpecializationReadSchema]]
-    total: int
-    limit: int
-    offset: int
+class PaginatedDoctorSpecializationsResponse(
+    PaginatedResponse[DoctorSpecializationRead]
+):
+    pass

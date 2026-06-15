@@ -1,16 +1,14 @@
-from typing import Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
+from .shared import BaseRead, PaginatedResponse
 
 
-class RoleReadSchema(BaseModel):
-    id: int
+class RoleBase(BaseModel):
     name: str
 
-    model_config = ConfigDict(from_attributes=True)
+
+class RoleRead(BaseRead, RoleBase):
+    pass
 
 
-class AllUserRolesResponseSchema(BaseModel):
-    data: Optional[list[RoleReadSchema]]
-    total: int
-    limit: int
-    offset: int
+class PaginatedUserRolesResponse(PaginatedResponse[RoleRead]):
+    pass

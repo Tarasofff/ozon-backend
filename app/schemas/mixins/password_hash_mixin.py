@@ -3,7 +3,7 @@ from pydantic import ConfigDict, model_validator
 from app.utils.bcrypt import hash_password_str
 
 
-class PasswordHashMixin:
+class PasswordHashMixin: # TODO
     model_config = ConfigDict(strict=True)
 
     @model_validator(mode="before")

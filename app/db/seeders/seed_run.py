@@ -29,7 +29,7 @@ async def async_main():
             session=session,
         )
 
-        await user_admin_seeder.seed() #TODO
+        # await user_admin_seeder.seed() #TODO
 
         # address hospital seed
         locations_seeder = AddressHospitalSeeder(session)

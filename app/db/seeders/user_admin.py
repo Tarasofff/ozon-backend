@@ -1,6 +1,6 @@
 from app.config.config import app_config
 from app.repository.role import RoleRepository
-from app.schemas.user import UserCreateSchema
+from app.schemas.user import UserCreate
 from app.services.user import UserService
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -46,7 +46,7 @@ class UserAdminSeeder:
             #     is_active=True,
             # )
 
-            user_data = UserCreateSchema(
+            user_data = UserCreate(
                 first_name="Olga",
                 middle_name="Solovyova",
                 last_name="Petrova",

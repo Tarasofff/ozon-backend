@@ -2,6 +2,8 @@ from pydantic import BaseModel, ConfigDict
 from typing import List, Optional
 from datetime import date, datetime
 
+# TODO
+
 
 class BaseSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)

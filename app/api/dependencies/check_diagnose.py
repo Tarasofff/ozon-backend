@@ -4,7 +4,7 @@ from app.db.session import get_session
 from app.repository import DiagnoseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.schemas.diagnose import DiagnoseCreateSchema
+from app.schemas.diagnose import DiagnoseCreate
 
 
 def get_diagnose_repo(
@@ -14,9 +14,9 @@ def get_diagnose_repo(
 
 
 async def check_diagnose_exists_by_name(
-    diagnose: DiagnoseCreateSchema, diagnose_repo: DiagnoseRepository = Depends(get_diagnose_repo)
+    diagnose: DiagnoseCreate, diagnose_repo: DiagnoseRepository = Depends(get_diagnose_repo)
 ):
-    diagnose_validate = DiagnoseCreateSchema.model_validate(diagnose)
+    diagnose_validate = DiagnoseCreate.model_validate(diagnose)
 
     result = await diagnose_repo.get_by_name(diagnose_validate.name)
     if result:

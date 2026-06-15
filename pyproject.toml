@@ -30,7 +30,6 @@ dependencies = [
     "arrow (==1.3.0)",
     "bcrypt (==4.3.0)",
     "binaryornot (==0.4.4)",
-    "black (==25.1.0)",
     "blinker (==1.9.0)",
     "certifi (==2025.4.26)",
     "chardet (==5.2.0)",
@@ -64,7 +63,7 @@ dependencies = [
     "mdurl (==0.1.2)",
     "mypy-extensions (==1.1.0)",
     "packaging (==25.0)",
-    "pathspec (==0.12.1)",
+    "pathspec (>=1.1.1,<2.0.0)",
     "pillow (==11.3.0)",
     "platformdirs (==4.4.0)",
     "pwdlib (==0.2.1)",
@@ -117,3 +116,7 @@ app = "cli.main:main"
 generate-keys = "scripts.generate_jwt_keys:main"
 migrate-db = "app.scripts.migrate:main"
 seed-db = "app.db.seeders.seed_run:main"
+[dependency-groups]
+dev = [
+    "black (>=26.5.1,<27.0.0)"
+]

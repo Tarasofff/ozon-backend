@@ -2,7 +2,7 @@ from fastapi import Depends
 from app.api.exceptions.api_exceptions import NotFoundException, UnauthorizedException
 from app.db.models import User
 from app.db.session import get_session
-from app.schemas.user import UserAuthSchema
+from app.schemas.user import UserAuth
 from app.services.jwt import JWTService
 from app.services.user import UserService
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -15,9 +15,9 @@ def get_user_service(session: AsyncSession = Depends(get_session)) -> UserServic
 
 
 async def check_login_user(
-    auth_data: UserAuthSchema, user_service: UserService = Depends(get_user_service)
+    auth_data: UserAuth, user_service: UserService = Depends(get_user_service)
 ) -> User:
-    user_validate = UserAuthSchema.model_validate(auth_data)
+    user_validate = UserAuth.model_validate(auth_data)
 
     user = await check_user_exists(user_validate.phone, user_service)
 

@@ -1,57 +1,44 @@
-from datetime import date, datetime
+from datetime import date
 from typing import Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
+from .shared import BaseRead, PaginatedResponse, BaseCreate
 
-from app.utils.utils import DateParser
 
-
-class PatientBaseSchema(BaseModel):
+class PatientBase(BaseModel):
     first_name: str
     middle_name: str
     last_name: str
     phone: str
     date_of_birth: date
     email: Optional[str]
-    is_active: Optional[bool] = None
+    is_active: bool
     notes: Optional[str]
 
 
-class PatientDiagnose(BaseModel):
-    id: int
-
+class PatientDiagnose(BaseCreate):
+    id: int  # diagnose id
     planned_session_count: int
 
 
-class PatientCreateSchema(PatientBaseSchema, DateParser):
+class PatientCreate(BaseCreate, PatientBase):
     user_id: int
     diagnose_ids: Optional[list[PatientDiagnose]]
 
-    model_config = ConfigDict(strict=True)
+
+class PatientRead(PatientBase, BaseRead):
+    pass
 
 
-class PatientReadSchema(PatientBaseSchema):
-    id: int
-    created_at: Optional[datetime]
-    updated_at: Optional[datetime]
-
-    model_config = ConfigDict(from_attributes=True)
-
-
-class PatientUpdateSchema(BaseModel, DateParser):
-    first_name: Optional[str]
-    middle_name: Optional[str]
-    last_name: Optional[str]
-    phone: Optional[str]
-    date_of_birth: Optional[date]
-    notes: Optional[str]
-    is_active: Optional[bool]
-    email: Optional[str]
-
-    model_config = ConfigDict(strict=True)
+class PatientUpdate(BaseCreate):
+    first_name: str | None = None
+    middle_name: str | None = None
+    last_name: str | None = None
+    phone: str | None = None
+    date_of_birth: date | None = None
+    notes: str | None = None
+    is_active: bool | None = None
+    email: str | None = None
 
 
-class PatientsResponseSchema(BaseModel):
-    data: Optional[list[PatientReadSchema]]
-    total: int
-    limit: int
-    offset: int
+class PaginatedPatientsResponse(PaginatedResponse[PatientRead]):
+    pass

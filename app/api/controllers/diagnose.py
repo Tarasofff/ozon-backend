@@ -6,9 +6,9 @@ from app.db.session import get_session
 from app.repository import DiagnoseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.schemas.diagnose import (
-    DiagnosesResponseSchema,
-    DiagnoseCreateSchema,
-    DiagnoseReadSchema,
+    PaginatedDiagnosesResponse,
+    DiagnoseCreate,
+    DiagnoseRead,
 )
 
 router = APIRouter(
@@ -27,11 +27,11 @@ def get_diagnose_repository(
 @router.post(
     "/",
     status_code=status.HTTP_200_OK,
-    response_model=DiagnoseReadSchema,
+    response_model=DiagnoseRead,
     dependencies=[Depends(check_diagnose_exists_by_name)],
 )
 async def create(
-    diagnose: DiagnoseCreateSchema,
+    diagnose: DiagnoseCreate,
     diagnose_repo: DiagnoseRepository = Depends(get_diagnose_repository),
 ):
     result = await diagnose_repo.create(diagnose.name)
@@ -41,7 +41,7 @@ async def create(
 
 @router.get(
     "/",
-    response_model=DiagnosesResponseSchema,
+    response_model=PaginatedDiagnosesResponse,
     status_code=status.HTTP_200_OK,
 )
 async def get_all(
@@ -52,7 +52,7 @@ async def get_all(
     data = await diagnose_repo.get_all(offset=offset, limit=limit)
     count = await diagnose_repo.get_count()
 
-    return DiagnosesResponseSchema.model_validate(
+    return PaginatedDiagnosesResponse.model_validate(
         {
             "data": data,
             "total": count,

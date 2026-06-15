@@ -4,8 +4,8 @@ from app.config.config import app_config
 from app.db.session import get_session
 from app.repository import DoctorRepository, SpecializationRepository
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.schemas.doctor import AllDoctorsResponseSchema
-from app.schemas.specialization import DoctorsSpecializationsResponseSchema
+from app.schemas.doctor import PaginatedDoctorsResponse
+from app.schemas.specialization import PaginatedDoctorSpecializationsResponse
 
 router = APIRouter(
     prefix=app_config.api_v1_prefix.doctor,
@@ -28,7 +28,7 @@ def get_specialization_repository(
 
 @router.get(
     "/",
-    response_model=AllDoctorsResponseSchema,
+    response_model=PaginatedDoctorsResponse,
     status_code=status.HTTP_200_OK,
 )
 async def get_all_doctors(
@@ -39,7 +39,7 @@ async def get_all_doctors(
     data = await doctor_repo.get_all(offset=offset, limit=limit)
     count = await doctor_repo.get_count()
 
-    return AllDoctorsResponseSchema.model_validate(
+    return PaginatedDoctorsResponse.model_validate(
         {
             "data": data,
             "total": count,
@@ -51,7 +51,7 @@ async def get_all_doctors(
 
 @router.get(
     "/specialization",
-    response_model=DoctorsSpecializationsResponseSchema,
+    response_model=PaginatedDoctorSpecializationsResponse,
     status_code=status.HTTP_200_OK,
 )
 async def get_all_doctors_specializations(
@@ -64,7 +64,7 @@ async def get_all_doctors_specializations(
     data = await specialization_repo.get_all(offset=offset, limit=limit)
     count = await specialization_repo.get_count()
 
-    return DoctorsSpecializationsResponseSchema.model_validate(
+    return PaginatedDoctorSpecializationsResponse.model_validate(
         {
             "data": data,
             "total": count,

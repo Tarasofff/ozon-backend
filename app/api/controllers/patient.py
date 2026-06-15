@@ -8,10 +8,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_session
 from app.repository.patient import PatientRepository
 from app.schemas.patient import (
-    PatientCreateSchema,
-    PatientReadSchema,
-    PatientUpdateSchema,
-    PatientsResponseSchema,
+    PatientCreate,
+    PatientRead,
+    PatientUpdate,
+    PaginatedPatientsResponse,
 )
 from app.services import PatientService, ReportService
 from app.api.dependencies import (
@@ -46,7 +46,7 @@ def get_report_service(session: AsyncSession = Depends(get_session)) -> ReportSe
 
 @router.post(
     "/create",
-    response_model=PatientReadSchema,
+    response_model=PatientRead,
     status_code=status.HTTP_201_CREATED,
     dependencies=[
         Depends(check_user_doctor_role),
@@ -54,7 +54,7 @@ def get_report_service(session: AsyncSession = Depends(get_session)) -> ReportSe
     ],
 )
 async def create(
-    patient_data: PatientCreateSchema,
+    patient_data: PatientCreate,
     patient_service: PatientService = Depends(get_patient_service),
 ):
     return await patient_service.create(patient_data)
@@ -94,7 +94,7 @@ async def get_by_filter(
 
     total = len(data)
 
-    return PatientsResponseSchema.model_validate(
+    return PaginatedPatientsResponse.model_validate(
         {
             "data": data,
             "total": total,
@@ -119,12 +119,12 @@ async def get_by_id(
 
 @router.put(
     "/update/{patient_id}",
-    response_model=PatientReadSchema,
+    response_model=PatientRead,
     status_code=status.HTTP_200_OK,
     dependencies=[Depends(check_patient_exists_by_id)],
 )
 async def update(
-    patient_data: PatientUpdateSchema,
+    patient_data: PatientUpdate,
     patient_id: int,
     patient_repo: PatientRepository = Depends(get_patient_repository),
 ):
