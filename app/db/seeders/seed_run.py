@@ -11,7 +11,7 @@ from app.db.seeders.specialization import SpecializationSeeder
 
 
 # sequence matters!!!
-async def main():
+async def async_main():
     async with AsyncSessionLocal() as session:
 
         # Role seed
@@ -29,7 +29,7 @@ async def main():
             session=session,
         )
 
-        # await user_admin_seeder.seed() #TODO
+        await user_admin_seeder.seed() #TODO
 
         # address hospital seed
         locations_seeder = AddressHospitalSeeder(session)
@@ -43,8 +43,12 @@ async def main():
         specialization_seeder = SpecializationSeeder(session)
         await specialization_seeder.seed()
 
-        print("All seeders complete")
+        print("[DB] Seeders complete")
+
+
+def main():
+    asyncio.run(async_main())
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

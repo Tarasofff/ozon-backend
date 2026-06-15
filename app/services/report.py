@@ -3,7 +3,7 @@ from io import BytesIO
 from typing import Any
 from jinja2 import Environment, FileSystemLoader
 from sqlalchemy import select
-from weasyprint import HTML  # type: ignore
+# from weasyprint import HTML  # type: ignore
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.models import (
     Hospital,
@@ -164,17 +164,18 @@ class ReportService:
 
     async def get_pdf_bytes(self, report: dict[str, Any]):
         # Рендерим HTML
-        template = self.template_env.get_template(self.report_filename)
+        # template = self.template_env.get_template(self.report_filename)
 
-        date = get_current_date()
+        # date = get_current_date()
 
-        html_content = template.render(
-            report=report,
-            date=date,
-        )
+        # html_content = template.render(
+        #     report=report,
+        #     date=date,
+        # )
 
-        # Генерация PDF в памяти
-        pdf_bytes = BytesIO()
-        HTML(string=html_content, base_url=str(self.base_dir)).write_pdf(pdf_bytes)  # type: ignore
-        pdf_bytes.seek(0)
-        return pdf_bytes
+        # # Генерация PDF в памяти
+        # pdf_bytes = BytesIO()
+        # HTML(string=html_content, base_url=str(self.base_dir)).write_pdf(pdf_bytes)  # type: ignore
+        # pdf_bytes.seek(0)
+        # return pdf_bytes
+        pass
