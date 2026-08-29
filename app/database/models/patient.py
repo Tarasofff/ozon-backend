@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from datetime import date
 from sqlalchemy import Boolean, String, Date, true
@@ -30,9 +30,9 @@ class Patient(IdIntPkMixin, TimestampMixin, Base):
 
     date_of_birth: Mapped[date] = mapped_column(Date, nullable=False)
 
-    email: Mapped[str] = mapped_column(String(length=320), nullable=True)
+    email: Mapped[Optional[str]] = mapped_column(String(length=320), nullable=True)
 
-    notes: Mapped[str] = mapped_column(String(1024), nullable=True)
+    notes: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
 
     is_active: Mapped[bool] = mapped_column(
         Boolean, default=True, nullable=False, server_default=true()
