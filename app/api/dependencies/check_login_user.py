@@ -1,7 +1,7 @@
 from fastapi import Depends
 from app.api.exceptions.api_exceptions import NotFoundException, UnauthorizedException
-from app.db.models import User
-from app.db.session import get_session
+from app.database.models import User
+from app.database.session import get_session
 from app.schemas.user import UserAuth
 from app.services.jwt import JWTService
 from app.services.user import UserService

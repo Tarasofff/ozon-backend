@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from app.db.models import PatientDoctorDiagnose
+from app.database.models import PatientDoctorDiagnose
 
 
 class PatientDoctorDiagnoseRepository:

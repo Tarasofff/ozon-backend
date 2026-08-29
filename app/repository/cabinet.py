@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from app.db.models import Cabinet
+from app.database.models import Cabinet
 
 
 class CabinetRepository:

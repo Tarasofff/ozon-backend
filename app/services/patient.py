@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.db.models import Patient
+from app.database.models import Patient
 from app.repository import (
     PatientRepository,
     PatientDoctorDiagnoseRepository,

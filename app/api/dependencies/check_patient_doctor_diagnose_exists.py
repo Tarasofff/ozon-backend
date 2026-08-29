@@ -1,25 +1,25 @@
 from fastapi import Depends
 from app.api.exceptions.api_exceptions import NotFoundException
-from app.db.session import get_session
+from app.database.session import get_session
 from app.repository import PatientDoctorDiagnoseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-def get_patient_doctor_diagnose_repo(
+def get_treatment_plan_repo(
     session: AsyncSession = Depends(get_session),
 ) -> PatientDoctorDiagnoseRepository:
     return PatientDoctorDiagnoseRepository(session=session)
 
 
-async def check_patient_doctor_diagnose_exists(
-    patient_doctor_diagnose_id: int,
-    patient_doctor_diagnose_repo: PatientDoctorDiagnoseRepository = Depends(
-        get_patient_doctor_diagnose_repo
+async def check_treatment_plan_exists(
+    treatment_plan_id: int,
+    treatment_plan_repo: PatientDoctorDiagnoseRepository = Depends(
+        get_treatment_plan_repo
     ),
 ) -> int:
-    result = await patient_doctor_diagnose_repo.get_by_id(patient_doctor_diagnose_id)
+    result = await treatment_plan_repo.get_by_id(treatment_plan_id)
     if not result:
         raise NotFoundException(
-            f"Patient_doctor_diagnose id:{patient_doctor_diagnose_id} not found"
+            f"Patient_doctor_diagnose id:{treatment_plan_id} not found"
         )
-    return patient_doctor_diagnose_id
+    return treatment_plan_id

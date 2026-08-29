@@ -1,6 +1,6 @@
 from fastapi import Depends
 from app.api.exceptions.api_exceptions import NotFoundException
-from app.db.session import get_session
+from app.database.session import get_session
 from app.repository import HospitalRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 

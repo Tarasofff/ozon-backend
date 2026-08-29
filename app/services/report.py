@@ -3,9 +3,10 @@ from io import BytesIO
 from typing import Any
 from jinja2 import Environment, FileSystemLoader
 from sqlalchemy import select
+
 # from weasyprint import HTML  # type: ignore
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.db.models import (
+from app.database.models import (
     Hospital,
     Address,
     PatientDoctorDiagnose,
@@ -16,7 +17,7 @@ from app.db.models import (
     Cabinet,
     Nurse,
 )
-from app.db.models.diagnose import Diagnose
+from app.database.models.diagnose import Diagnose
 from app.repository import HospitalRepository, PatientRepository
 from app.schemas.report import (
     HospitalSchema,
@@ -43,15 +44,13 @@ class ReportService:
         self.patient_repo = PatientRepository(session=session)
         self.hospital_repo = HospitalRepository(session=session)
 
-    async def _get_session_data(
-        self, patient_doctor_diagnose_id: int, hospital_id: int
-    ):
+    async def _get_session_data(self, treatment_plan_id: int, hospital_id: int):
         stmt = (
             select(Session)
             .join(Session.post)
             .join(Post.cabinet)
             .join(Cabinet.hospital)
-            .where(Session.patient_doctor_diagnose_id == patient_doctor_diagnose_id)
+            .where(Session.treatment_plan_id == treatment_plan_id)
             .where(Hospital.id == hospital_id)
             .options(
                 load_only(
@@ -85,10 +84,10 @@ class ReportService:
             {"session": session_data}
         ).model_dump()
 
-    async def _get_patient_doctor_diagnose_data(self, patient_doctor_diagnose_id: int):
+    async def _get_treatment_plan_data(self, treatment_plan_id: int):
         stmt = (
             select(PatientDoctorDiagnose)
-            .where(PatientDoctorDiagnose.id == patient_doctor_diagnose_id)
+            .where(PatientDoctorDiagnose.id == treatment_plan_id)
             .options(
                 selectinload(PatientDoctorDiagnose.diagnose).load_only(
                     Diagnose.id, Diagnose.name
@@ -106,10 +105,10 @@ class ReportService:
         )
 
         result = await self.session.execute(stmt)
-        patient_doctor_diagnose_data = result.scalar_one_or_none()
+        treatment_plan_data = result.scalar_one_or_none()
 
         return PatientDoctorDiagnoseSchema.model_validate(
-            patient_doctor_diagnose_data
+            treatment_plan_data
         ).model_dump()
 
     async def _get_hospital_data(self, hospital_id: int):
@@ -134,26 +133,22 @@ class ReportService:
         return HospitalSchema.model_validate(hospital_data).model_dump()
 
     async def get_report_data(
-        self, patient_id: int, hospital_id: int, patient_doctor_diagnose_id: int
+        self, patient_id: int, hospital_id: int, treatment_plan_id: int
     ):
         patient_dump = await self._get_patient_data(patient_id)
 
-        session_dump = await self._get_session_data(
-            patient_doctor_diagnose_id, hospital_id
-        )
+        session_dump = await self._get_session_data(treatment_plan_id, hospital_id)
 
         hospital_dump = await self._get_hospital_data(hospital_id)
 
-        patient_doctor_diagnose_dump = await self._get_patient_doctor_diagnose_data(
-            patient_doctor_diagnose_id
-        )
+        treatment_plan_dump = await self._get_treatment_plan_data(treatment_plan_id)
 
         return PatientReportSchema.model_validate(
             {
                 "patient": patient_dump,
                 "hospital": hospital_dump,
                 **session_dump,
-                **patient_doctor_diagnose_dump,
+                **treatment_plan_dump,
             }
         ).model_dump()
 

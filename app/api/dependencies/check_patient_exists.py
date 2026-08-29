@@ -3,7 +3,7 @@ from app.api.exceptions.api_exceptions import (
     NotFoundException,
     UnprocessableEntityException,
 )
-from app.db.session import get_session
+from app.database.session import get_session
 from app.repository import PatientRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 

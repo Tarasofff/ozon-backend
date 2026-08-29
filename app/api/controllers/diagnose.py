@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends, Query, status
 from app.api.dependencies import check_token
 from app.api.dependencies.check_diagnose import check_diagnose_exists_by_name
-from app.config.config import app_config
-from app.db.session import get_session
+from app.database.session import get_session
 from app.repository import DiagnoseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.schemas.diagnose import (

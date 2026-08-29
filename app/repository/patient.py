@@ -1,9 +1,9 @@
 from typing import Any, Optional, List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import ColumnElement, func, select, update
-from app.db.models import Patient
+from app.database.models import Patient
 from sqlalchemy.orm import selectinload
-from app.db.models import (
+from app.database.models import (
     PatientDoctorDiagnose,
     Doctor,
     User,
@@ -25,7 +25,7 @@ class PatientRepository:
 
         if relations:
             stmt = stmt.options(
-                selectinload(Patient.patient_doctor_diagnose)
+                selectinload(Patient.treatment_plan)
                 .load_only(
                     PatientDoctorDiagnose.id,
                     PatientDoctorDiagnose.planned_session_count,
@@ -41,11 +41,11 @@ class PatientRepository:
                     User.phone,
                     User.email,
                 ),
-                selectinload(Patient.patient_doctor_diagnose)
+                selectinload(Patient.treatment_plan)
                 .load_only(PatientDoctorDiagnose.id)
                 .joinedload(PatientDoctorDiagnose.diagnose)
                 .load_only(Diagnose.id, Diagnose.name),
-                selectinload(Patient.patient_doctor_diagnose)
+                selectinload(Patient.treatment_plan)
                 .load_only(PatientDoctorDiagnose.id)
                 .joinedload(PatientDoctorDiagnose.session)
                 .load_only(
@@ -63,7 +63,7 @@ class PatientRepository:
                 .joinedload(Cabinet.hospital)
                 .load_only(Hospital.id, Hospital.name, Hospital.number)
                 .joinedload(Hospital.address),
-                selectinload(Patient.patient_doctor_diagnose)
+                selectinload(Patient.treatment_plan)
                 .joinedload(PatientDoctorDiagnose.session)
                 .joinedload(Session.nurse)
                 .load_only(Nurse.id)

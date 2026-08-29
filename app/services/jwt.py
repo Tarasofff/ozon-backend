@@ -4,7 +4,7 @@ import jwt
 
 from app.config.config import app_config
 from app.schemas.token import Token
-from app.db.models import User
+from app.database.models import User
 
 
 class JWTService:

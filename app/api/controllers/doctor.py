@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Query, status
 from app.api.dependencies import check_token
 from app.config.config import app_config
-from app.db.session import get_session
+from app.database.session import get_session
 from app.repository import DoctorRepository, SpecializationRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.schemas.doctor import PaginatedDoctorsResponse

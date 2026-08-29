@@ -1,6 +1,6 @@
 from fastapi import Depends
 from app.api.exceptions.api_exceptions import UnprocessableEntityException
-from app.db.session import get_session
+from app.database.session import get_session
 from app.repository import DiagnoseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 

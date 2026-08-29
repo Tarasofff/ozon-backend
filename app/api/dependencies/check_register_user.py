@@ -2,7 +2,7 @@ from fastapi import Depends
 from app.api.exceptions.api_exceptions import (
     UnprocessableEntityException,
 )
-from app.db.session import get_session
+from app.database.session import get_session
 from app.schemas.user import UserCreate
 from app.services.jwt import JWTService
 from app.services.user import UserService

@@ -1,7 +1,7 @@
 from typing import Any, Optional, List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update
-from app.db.models.user import User
+from app.database.models.user import User
 
 
 class UserRepository:

@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
-from app.db.models import Specialization
+from app.database.models import Specialization
 
 
 class SpecializationRepository:

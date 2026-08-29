@@ -6,6 +6,6 @@ from app.repository.diagnose import DiagnoseRepository
 from app.repository.cabinet import CabinetRepository
 from app.repository.post import PostRepository
 from app.repository.address import AddressRepository
-from app.repository.patient_doctor_diagnose import PatientDoctorDiagnoseRepository
+from app.repository.treatment_plan import PatientDoctorDiagnoseRepository
 from app.repository.doctor import DoctorRepository
 from app.repository.specialization import SpecializationRepository

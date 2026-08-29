@@ -1,7 +1,7 @@
 from typing import List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select
-from app.db.models.role import Role
+from app.database.models.role import Role
 
 
 class RoleRepository:

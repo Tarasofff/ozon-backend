@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
-from app.db.models import Doctor, User
+from app.database.models import Doctor, User
 from sqlalchemy.orm import selectinload
 
 

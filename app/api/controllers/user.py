@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Query, status
 from app.api.dependencies import check_login_user, check_register_user, check_token
 from app.config.config import app_config
-from app.db.models import User
-from app.db.session import get_session
+from app.database.models import User
+from app.database.session import get_session
 from app.repository.role import RoleRepository
 from app.schemas.role import PaginatedUserRolesResponse
 from app.schemas.user import UserAuthResponse, UserCreate

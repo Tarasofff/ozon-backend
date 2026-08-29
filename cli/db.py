@@ -1,6 +1,6 @@
 from alembic.config import Config
 from alembic import command
-from app.db.seeders.seed_run import main as seed_main
+from app.database.seeders.run import main as seed_main
 
 
 

@@ -5,7 +5,7 @@ from app.api.dependencies.check_user_rules import check_user_doctor_role
 from app.config.config import app_config
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.db.session import get_session
+from app.database.session import get_session
 from app.repository.patient import PatientRepository
 from app.schemas.patient import (
     PatientCreate,
@@ -17,7 +17,7 @@ from app.services import PatientService, ReportService
 from app.api.dependencies import (
     check_patient_exists_by_id,
     check_hospital_exists,
-    check_patient_doctor_diagnose_exists,
+    check_treatment_plan_exists,
     check_token,
 )
 
@@ -140,13 +140,13 @@ async def update(
 async def get_report(
     patient_id: int = Depends(check_patient_exists_by_id),
     hospital_id: int = Depends(check_hospital_exists),
-    patient_doctor_diagnose_id: int = Depends(check_patient_doctor_diagnose_exists),
+    treatment_plan_id: int = Depends(check_treatment_plan_exists),
     disposition: str = Query("inline", regex="^(inline|attachment)$"),
     report_service: ReportService = Depends(get_report_service),
 ):
-    print(patient_id, hospital_id, patient_doctor_diagnose_id, disposition)
+    print(patient_id, hospital_id, treatment_plan_id, disposition)
     report_data_dump = await report_service.get_report_data(
-        patient_id, hospital_id, patient_doctor_diagnose_id
+        patient_id, hospital_id, treatment_plan_id
     )
 
     pdf_bytes = await report_service.get_pdf_bytes(report_data_dump)
