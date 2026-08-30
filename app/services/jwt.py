@@ -3,7 +3,7 @@ from typing import Any, Dict, Union, Optional
 import jwt
 
 from app.config.config import app_config
-from app.schemas.token import Token
+from app.schemas.token import UserToken
 from app.database.models import User
 
 
@@ -23,7 +23,7 @@ class JWTService:
         self,
         payload: Dict[str, Any],
         expire_timedelta: Optional[timedelta] = None,
-    ) -> Token:
+    ) -> UserToken:
         now = datetime.now(timezone.utc)
         expire = now + (
             expire_timedelta or timedelta(minutes=self.access_token_expire_minutes)
@@ -41,7 +41,7 @@ class JWTService:
             algorithm=self.algorithm,
         )
 
-        return Token(token=token, token_type=self.token_type)
+        return UserToken(token=token, token_type=self.token_type)
 
     def decode(self, token: Union[str, bytes]) -> Dict[str, Any]:
         return jwt.decode(

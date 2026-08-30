@@ -1,12 +1,12 @@
-from pydantic import BaseModel
+from app.schemas.shared import BaseSchema, BaseCreate
 from .shared import BaseRead, PaginatedResponse
 
 
-class DiagnoseBase(BaseModel):
+class DiagnoseBase(BaseSchema):
     name: str
 
 
-class DiagnoseCreate(DiagnoseBase):
+class DiagnoseCreate(BaseCreate, DiagnoseBase):
     pass
 
 

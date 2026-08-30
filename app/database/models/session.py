@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Enum, ForeignKey, Integer, String, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 class Session(IdIntPkMixin, TimestampMixin, Base):
     __tablename__ = TableNames.SESSION
 
-    notes: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
+    notes: Mapped[str | None] = mapped_column(String(1024), nullable=True)
 
     session_duration: Mapped[int] = mapped_column(
         Integer, nullable=False, comment="Session duration in seconds"

@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from sqlalchemy import ForeignKey, Integer, String, UniqueConstraint
 from app.database.models.base import Base
@@ -16,7 +16,7 @@ class Hospital(IdIntPkMixin, TimestampMixin, Base):
 
     name: Mapped[str] = mapped_column(String(256), nullable=False)
 
-    number: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    number: Mapped[str | None] = mapped_column(String(20), nullable=True)
 
     address: Mapped[Address] = relationship(back_populates="hospitals")
 
@@ -26,7 +26,7 @@ class Hospital(IdIntPkMixin, TimestampMixin, Base):
 
     cabinets: Mapped[list[Cabinet]] = relationship(back_populates="hospital")
 
-    users: Mapped[list[User]] = relationship("User", back_populates="hospital")
+    users: Mapped[list[User]] = relationship(back_populates="hospital")
 
     __table_args__ = (
         UniqueConstraint(

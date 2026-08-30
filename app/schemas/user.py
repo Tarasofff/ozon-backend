@@ -1,37 +1,45 @@
-from typing import Optional
-from pydantic import BaseModel, EmailStr
+from pydantic import EmailStr, Field
 from datetime import date
+from app.schemas.shared import BaseSchema
+from app.schemas.shared.types import (
+    FirstNameStr,
+    LastNameStr,
+    PatronymicStr,
+    PhoneStr,
+    PasswordStr,
+)
 from .shared import BaseCreate, BaseRead
-from .token import Token
 
 
-class UserBase(BaseModel):
-    first_name: str
-    middle_name: str
-    last_name: str
-    phone: str
-    email: Optional[EmailStr]
+class UserToken(BaseSchema):
+    access_token: str = Field(min_length=10, max_length=255)
+    token_type: str = Field(min_length=3, max_length=20)
+
+
+class UserBase(BaseSchema):
+    first_name: FirstNameStr
+    patronymic: PatronymicStr
+    last_name: LastNameStr
+    phone: PhoneStr
+    email: EmailStr | None = None
     date_of_birth: date
-    is_active: bool
-    role_id: int
-
-
-# class UserCreateSchema(PasswordHashMixin, DateParser, UserBase):
-#     model_config = ConfigDict(strict=True)
+    is_active: bool = True
+    hospital_id: int
 
 
 class UserCreate(BaseCreate, UserBase):
-    password: str
+    password: PasswordStr
 
 
 class UserRead(BaseRead, UserBase):
     pass
 
 
-class UserAuth(BaseModel):
-    phone: str
-    password: str
+class UserAuth(BaseSchema):
+    phone: PhoneStr
+    password: PasswordStr
 
 
-class UserAuthResponse(UserRead, Token):
-    pass
+class UserAuthResponse(BaseSchema):
+    user: UserRead
+    token: UserToken

@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from pathlib import Path
-
-BASE_DIR = Path(__file__).parent.parent.parent
+from app.core.constants import BASE_DIR
 
 
 class JwtConfig(BaseModel):

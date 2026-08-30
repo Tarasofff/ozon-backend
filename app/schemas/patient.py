@@ -1,18 +1,24 @@
 from datetime import date
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from .shared import BaseRead, PaginatedResponse, BaseCreate
+from app.schemas.shared.types import (
+    FirstNameStr,
+    LastNameStr,
+    PatronymicStr,
+    PhoneStr,
+)
 
 
 class PatientBase(BaseModel):
-    first_name: str
-    middle_name: str
-    last_name: str
-    phone: str
+    first_name: FirstNameStr
+    patronymic: PatronymicStr
+    last_name: LastNameStr
+    phone: PhoneStr
     date_of_birth: date
-    email: Optional[str]
+    email: EmailStr | None = None
     is_active: bool
-    notes: Optional[str]
+    notes: str | None = None
 
 
 class PatientDiagnose(BaseCreate):
@@ -27,17 +33,6 @@ class PatientCreate(BaseCreate, PatientBase):
 
 class PatientRead(PatientBase, BaseRead):
     pass
-
-
-class PatientUpdate(BaseCreate):
-    first_name: str | None = None
-    middle_name: str | None = None
-    last_name: str | None = None
-    phone: str | None = None
-    date_of_birth: date | None = None
-    notes: str | None = None
-    is_active: bool | None = None
-    email: str | None = None
 
 
 class PaginatedPatientsResponse(PaginatedResponse[PatientRead]):

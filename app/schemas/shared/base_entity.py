@@ -1,8 +1,5 @@
-from datetime import datetime
-from pydantic import BaseModel 
+from app.schemas.shared.base_schema import BaseSchema
 
-class BaseEntity(BaseModel):
+
+class BaseEntity(BaseSchema):
     id: int
-    created_at: datetime
-    updated_at: datetime
-

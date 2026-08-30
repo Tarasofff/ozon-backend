@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 from sqlalchemy import Boolean, ForeignKey, Integer, String, Date, true, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import date
@@ -20,7 +20,7 @@ class User(IdIntPkMixin, TimestampMixin, Base):
 
     last_name: Mapped[str] = mapped_column(String(64), nullable=False)
 
-    patronymic: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    patronymic: Mapped[str] = mapped_column(String(64), nullable=False)
 
     phone: Mapped[str] = mapped_column(
         String(20),
@@ -29,7 +29,7 @@ class User(IdIntPkMixin, TimestampMixin, Base):
         index=True,
     )
 
-    email: Mapped[Optional[str]] = mapped_column(String(length=320), nullable=True)
+    email: Mapped[str | None] = mapped_column(String(length=320), nullable=True)
 
     date_of_birth: Mapped[date] = mapped_column(Date, nullable=False)
 

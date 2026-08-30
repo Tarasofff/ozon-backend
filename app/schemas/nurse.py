@@ -3,13 +3,13 @@ from app.database.models.enums.user_role import UserRole
 from app.schemas.user import UserBase, UserCreate, UserRead
 
 
-class DoctorBase(UserBase):
-    role: Literal[UserRole.DOCTOR] = UserRole.DOCTOR
+class NurseBase(UserBase):
+    role: Literal[UserRole.NURSE] = UserRole.NURSE
 
 
-class DoctorCreate(UserCreate, DoctorBase):
+class NurseCreate(UserCreate, NurseBase):
     pass
 
 
-class DoctorRead(UserRead, DoctorBase):
+class NurseRead(UserRead, NurseBase):
     pass

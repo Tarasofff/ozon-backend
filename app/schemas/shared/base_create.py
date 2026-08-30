@@ -1,5 +1,6 @@
-from pydantic import ConfigDict, BaseModel
+from pydantic import ConfigDict
+from app.schemas.shared.base_schema import BaseSchema
 
 
-class BaseCreate(BaseModel):
-    model_config = ConfigDict(strict=True)
+class BaseCreate(BaseSchema):
+    model_config = ConfigDict(strict=True, extra="forbid")  # TODO test
