@@ -1,4 +1,4 @@
-from pydantic import EmailStr, Field
+from pydantic import EmailStr
 from datetime import date
 from app.schemas.shared import BaseSchema
 from app.schemas.shared.types import (
@@ -9,11 +9,6 @@ from app.schemas.shared.types import (
     PasswordStr,
 )
 from .shared import BaseCreate, BaseRead
-
-
-class UserToken(BaseSchema):
-    access_token: str = Field(min_length=10, max_length=255)
-    token_type: str = Field(min_length=3, max_length=20)
 
 
 class UserBase(BaseSchema):
@@ -33,13 +28,3 @@ class UserCreate(BaseCreate, UserBase):
 
 class UserRead(BaseRead, UserBase):
     pass
-
-
-class UserAuth(BaseSchema):
-    phone: PhoneStr
-    password: PasswordStr
-
-
-class UserAuthResponse(BaseSchema):
-    user: UserRead
-    token: UserToken

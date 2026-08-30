@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-from sqlalchemy import ForeignKey, Integer, UniqueConstraint
+from sqlalchemy import ForeignKey, Integer, String, UniqueConstraint
 from app.database.models.base import Base
 from app.database.models.enums.table_names import TableNames
 from app.database.models.mixins import IdIntPkMixin, TimestampMixin
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 class Post(IdIntPkMixin, TimestampMixin, Base):
     __tablename__ = TableNames.POST
 
-    number: Mapped[int] = mapped_column(Integer, nullable=False)
+    number: Mapped[str] = mapped_column(String(50), nullable=False)
 
     cabinet: Mapped[Cabinet] = relationship(back_populates="posts")
 

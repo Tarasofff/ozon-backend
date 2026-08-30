@@ -5,16 +5,19 @@ from sqlalchemy import (
     ForeignKey,
     Integer,
     Enum,
-    UniqueConstraint,
+    Index,
     column,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.models.base import Base
 from app.database.models.enums import TableNames, TreatmentPlanStatus
 from app.database.models.mixins import TimestampMixin, IdIntPkMixin
+from app.utils.utils import enum_values
 
 if TYPE_CHECKING:
     from app.database.models import Doctor, Diagnose, Patient, Session
+
+status_type = Enum(TreatmentPlanStatus, native_enum=False, values_callable=enum_values)
 
 
 class TreatmentPlan(IdIntPkMixin, TimestampMixin, Base):
@@ -36,7 +39,7 @@ class TreatmentPlan(IdIntPkMixin, TimestampMixin, Base):
     )
 
     status: Mapped[TreatmentPlanStatus] = mapped_column(
-        Enum(TreatmentPlanStatus, native_enum=False),
+        status_type,
         default=TreatmentPlanStatus.IN_PROGRESS,
         server_default=TreatmentPlanStatus.IN_PROGRESS.value,
         nullable=False,
@@ -50,11 +53,14 @@ class TreatmentPlan(IdIntPkMixin, TimestampMixin, Base):
     __table_args__ = (
         # Частичный уникальный индекс для PostgreSQL:
         # Нельзя создать 2 активных плана для одного пациента по одному диагнозу
-        UniqueConstraint(
+        Index(
+            "ix_uq_active_patient_diagnose_plan",
             "patient_id",
             "diagnose_id",
-            name="ix_uq_active_patient_diagnose_plan",
-            postgresql_where=(column("status") == TreatmentPlanStatus.IN_PROGRESS),
+            unique=True,
+            postgresql_where=(
+                column("status", type_=status_type) == TreatmentPlanStatus.IN_PROGRESS
+            ),
         ),
         CheckConstraint(
             "planned_session_count >= 0", name="ck_planned_session_count_non_negative"

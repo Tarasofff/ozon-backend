@@ -1,12 +1,22 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from sqlalchemy import Boolean, ForeignKey, Integer, String, Date, true, Enum
+from sqlalchemy import (
+    Boolean,
+    ForeignKey,
+    Integer,
+    String,
+    Date,
+    UniqueConstraint,
+    true,
+    Enum,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import date
 from app.database.models.base import Base
 from app.database.models.enums.table_names import TableNames
 from app.database.models.enums.user_role import UserRole
 from app.database.models.mixins import IdIntPkMixin, TimestampMixin
+from app.utils.utils import enum_values
 
 if TYPE_CHECKING:
     from app.database.models import Hospital
@@ -25,8 +35,6 @@ class User(IdIntPkMixin, TimestampMixin, Base):
     phone: Mapped[str] = mapped_column(
         String(20),
         nullable=False,
-        unique=True,
-        index=True,
     )
 
     email: Mapped[str | None] = mapped_column(String(length=320), nullable=True)
@@ -46,9 +54,19 @@ class User(IdIntPkMixin, TimestampMixin, Base):
     hospital: Mapped[Hospital] = relationship("Hospital", back_populates="users")
 
     role: Mapped[UserRole] = mapped_column(
-        Enum(UserRole, native_enum=False), nullable=False
+        Enum(
+            UserRole,
+            native_enum=False,
+            values_callable=enum_values,
+        ),
+        nullable=False,
     )
 
     __mapper_args__ = {
         "polymorphic_on": "role",
     }
+
+    # TODO ???
+    # __table_args__ = (
+    #     UniqueConstraint("phone", "role"),
+    # )

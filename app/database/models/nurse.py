@@ -4,9 +4,10 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.models.enums.table_names import TableNames
 from app.database.models.enums.user_role import UserRole
+from app.database.models.user import User
 
 if TYPE_CHECKING:
-    from app.database.models import Session, User
+    from app.database.models import Session
 
 
 class Nurse(User):

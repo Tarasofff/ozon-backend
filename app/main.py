@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from app.api.exceptions.handlers import register_exception_handlers
 from app.api.router import api_router
 from app.core.config import routes
 from app.utils.utils import log_registered_routes
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="OZON", lifespan=log_registered_routes)
+
+# Регистрация глобальных хэндлеров ошибок
+register_exception_handlers(app)
 
 app.add_middleware(
     CORSMiddleware,

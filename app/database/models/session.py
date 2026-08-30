@@ -6,6 +6,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.models.base import Base
 from app.database.models.enums import TableNames, SessionStatus
 from app.database.models.mixins import TimestampMixin, IdIntPkMixin
+from app.utils.utils import enum_values
 
 if TYPE_CHECKING:
     from app.database.models import Nurse, Post, TreatmentPlan
@@ -21,7 +22,7 @@ class Session(IdIntPkMixin, TimestampMixin, Base):
     )
 
     status: Mapped[SessionStatus] = mapped_column(
-        Enum(SessionStatus, native_enum=False),
+        Enum(SessionStatus, native_enum=False, values_callable=enum_values),
         default=SessionStatus.PLANNED,
         server_default=SessionStatus.PLANNED.value,
         nullable=False,
@@ -42,9 +43,9 @@ class Session(IdIntPkMixin, TimestampMixin, Base):
         Integer, ForeignKey(f"{TableNames.TREATMENT_PLAN}.id"), nullable=False
     )
 
-    treatment_plan: Mapped[TreatmentPlan] = relationship(back_populates="session")
+    treatment_plans: Mapped[TreatmentPlan] = relationship(back_populates="sessions")
 
-    post: Mapped[Post] = relationship(back_populates="session")
+    post: Mapped[Post] = relationship(back_populates="sessions")
 
     post_id: Mapped[int] = mapped_column(
         Integer, ForeignKey(f"{TableNames.POST}.id"), nullable=False

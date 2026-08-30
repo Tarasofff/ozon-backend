@@ -1,9 +1,11 @@
 from datetime import date, datetime
+from enum import StrEnum
 from typing import Any
 from fastapi.routing import APIRoute
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pydantic import field_validator
+from sqlalchemy import Enum
 
 
 @asynccontextmanager
@@ -45,3 +47,7 @@ class DateParser:
         elif isinstance(dob, date):
             return dob
         return None
+
+
+def enum_values(enum_class: type[StrEnum]) -> list[str]:
+    return [member.value for member in enum_class]
