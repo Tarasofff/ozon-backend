@@ -20,7 +20,7 @@ authors = [
     {name = "Arthur Tarasov",email = "78569398+Tarasofff@users.noreply.github.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.14,<4.0"
 dependencies = [
     "alembic (==1.16.1)",
     "annotated-types (==0.7.0)",
@@ -118,5 +118,6 @@ migrate-db = "app.scripts.migrate:main"
 seed-db = "app.db.seeders.seed_run:main"
 [dependency-groups]
 dev = [
-    "black (>=26.5.1,<27.0.0)"
+    "black (>=26.5.1,<27.0.0)",
+    "asyncpg-stubs (>=0.31.3,<0.32.0)"
 ]

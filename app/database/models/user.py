@@ -6,7 +6,6 @@ from sqlalchemy import (
     Integer,
     String,
     Date,
-    UniqueConstraint,
     true,
     Enum,
 )
@@ -35,6 +34,8 @@ class User(IdIntPkMixin, TimestampMixin, Base):
     phone: Mapped[str] = mapped_column(
         String(20),
         nullable=False,
+        unique=True,
+        index=True,
     )
 
     email: Mapped[str | None] = mapped_column(String(length=320), nullable=True)
@@ -51,7 +52,7 @@ class User(IdIntPkMixin, TimestampMixin, Base):
         Integer, ForeignKey(f"{TableNames.HOSPITAL}.id"), nullable=False
     )
 
-    hospital: Mapped[Hospital] = relationship("Hospital", back_populates="users")
+    hospital: Mapped[Hospital] = relationship(back_populates="users")
 
     role: Mapped[UserRole] = mapped_column(
         Enum(
@@ -65,8 +66,3 @@ class User(IdIntPkMixin, TimestampMixin, Base):
     __mapper_args__ = {
         "polymorphic_on": "role",
     }
-
-    # TODO ???
-    # __table_args__ = (
-    #     UniqueConstraint("phone", "role"),
-    # )
