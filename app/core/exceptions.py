@@ -1,7 +1,7 @@
 class DomainException(Exception):
     """Базовое исключение для бизнес-логики."""
 
-    def __init__(self, message: str = "Fatal error"):
+    def __init__(self, message: str = "Business logic error"):
         self.message = message
         super().__init__(message)
 
