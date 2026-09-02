@@ -1,13 +1,23 @@
-from pydantic import Field
+from datetime import datetime
+from typing import TypedDict
+from app.schemas import DoctorRead, NurseRead, UserRead
 from app.schemas.shared.base_schema import BaseSchema
 from app.schemas.shared.types import PasswordStr, PhoneStr
-from app.schemas.shared.types.identity import PhoneStr
-from app.schemas.user_unions import UserReadUnion
+
+
+class AccessTokenPayload(TypedDict):
+    user_id: int
+    user_role: str
+
+
+class EncodedAccessTokenPayload(AccessTokenPayload):
+    exp: datetime
+    iat: datetime
 
 
 class AccessToken(BaseSchema):
-    access_token: str = Field(min_length=10, max_length=255)
-    token_type: str = Field(min_length=3, max_length=20)
+    access_token: str
+    token_type: str
 
 
 class AuthPayload(BaseSchema):
@@ -16,5 +26,6 @@ class AuthPayload(BaseSchema):
 
 
 class AuthResponse(BaseSchema):
-    user: UserReadUnion
+    user: UserRead
+    profile: DoctorRead | NurseRead
     token: AccessToken

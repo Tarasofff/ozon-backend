@@ -1,15 +1,14 @@
-from typing import Literal
-from app.database.models.enums.user_role import UserRole
-from app.schemas.user import UserBase, UserCreate, UserRead
+from app.schemas.shared.base_schema import BaseSchema
+from app.schemas.shared import BaseCreate, BaseRead
 
 
-class NurseBase(UserBase):
-    role: Literal[UserRole.NURSE] = UserRole.NURSE
+class NurseBase(BaseSchema):
+    specs: str  # TEST
 
 
-class NurseCreate(UserCreate, NurseBase):
+class NurseCreate(BaseCreate, NurseBase):
     pass
 
 
-class NurseRead(UserRead, NurseBase):
+class NurseRead(BaseRead, NurseBase):
     pass

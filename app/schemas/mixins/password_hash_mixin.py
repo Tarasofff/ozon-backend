@@ -1,6 +1,6 @@
 from typing import Any, Dict
 from pydantic import ConfigDict, model_validator
-from app.infrastructure.hash import hash_password_str
+from app.infrastructure.security.hash import hash_password_str
 
 
 class PasswordHashMixin: # TODO

@@ -1,5 +1,7 @@
 from pydantic import EmailStr
 from datetime import date
+from app.database.models.enums.user_role import UserRole
+from app.schemas import NurseCreate, DoctorCreate
 from app.schemas.shared import BaseSchema
 from app.schemas.shared.types import (
     FirstNameStr,
@@ -20,10 +22,16 @@ class UserBase(BaseSchema):
     date_of_birth: date
     is_active: bool = True
     hospital_id: int
+    role: UserRole
 
 
-class UserCreate(BaseCreate, UserBase):
+class UserWithPassword(BaseCreate, UserBase):
     password: PasswordStr
+
+
+class UserCreate(BaseCreate):
+    user: UserWithPassword
+    profile: DoctorCreate | NurseCreate
 
 
 class UserRead(BaseRead, UserBase):

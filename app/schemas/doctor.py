@@ -1,15 +1,14 @@
-from typing import Literal
-from app.database.models.enums.user_role import UserRole
-from app.schemas.user import UserBase, UserCreate, UserRead
+from app.schemas.shared import BaseCreate, BaseRead
+from app.schemas.shared.base_schema import BaseSchema
 
 
-class DoctorBase(UserBase):
-    role: Literal[UserRole.DOCTOR] = UserRole.DOCTOR
+class DoctorBase(BaseSchema):
+    license: str  # TEST
 
 
-class DoctorCreate(UserCreate, DoctorBase):
+class DoctorCreate(BaseCreate, DoctorBase):
     pass
 
 
-class DoctorRead(UserRead, DoctorBase):
+class DoctorRead(BaseRead, DoctorBase):
     pass

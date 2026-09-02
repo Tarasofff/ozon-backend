@@ -8,6 +8,7 @@ class AppRoutes(BaseModel):
     doctor: str = "/doctor"
     patient: str = "/patient"
     user: str = "/user"
+    auth: str = "/auth"
     diagnose: str = "/diagnose"
 
 
