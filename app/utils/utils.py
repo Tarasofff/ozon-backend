@@ -5,7 +5,6 @@ from fastapi.routing import APIRoute
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pydantic import field_validator
-from sqlalchemy import Enum
 
 
 @asynccontextmanager

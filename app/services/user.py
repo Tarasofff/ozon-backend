@@ -18,7 +18,7 @@ class UserService:
         self.session = session
         self.user_repo = UserRepository(session=session)
 
-    def _build_user(self, register_data: UserCreate) -> User:
+    async def create(self, register_data: UserCreate) -> User:
         user_data = register_data.user.model_dump(
             exclude={"password"},
         )
@@ -28,13 +28,10 @@ class UserService:
 
         model_cls = ROLE_TO_MODEL_MAP[register_data.user.role]
 
-        return model_cls(
+        user = model_cls(
             **user_data,
             **register_data.profile.model_dump(),
         )
-
-    async def create(self, register_data: UserCreate) -> User:
-        user = self._build_user(register_data)
 
         self.user_repo.add(user)
 
