@@ -13,11 +13,6 @@ if TYPE_CHECKING:
 class Doctor(User):
     __tablename__ = TableNames.DOCTOR
 
-    # TEST
-    license: Mapped[str] = mapped_column(
-        String(256), nullable=False, default="license", server_default="license"
-    )
-
     id: Mapped[int] = mapped_column(
         ForeignKey(f"{TableNames.USER}.id", ondelete="CASCADE"), primary_key=True
     )

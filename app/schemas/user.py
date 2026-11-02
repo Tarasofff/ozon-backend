@@ -21,16 +21,15 @@ class UserBase(BaseSchema):
     email: EmailStr | None = None
     date_of_birth: date
     is_active: bool = True
-    hospital_id: int
     role: UserRole
 
 
-class UserWithPassword(BaseCreate, UserBase):
+class UserAccount(BaseCreate, UserBase):
     password: PasswordStr
 
 
 class UserCreate(BaseCreate):
-    user: UserWithPassword
+    user: UserAccount
     profile: DoctorCreate | NurseCreate
 
 

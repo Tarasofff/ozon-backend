@@ -3,7 +3,7 @@ from app.schemas.shared.base_schema import BaseSchema
 
 
 class DoctorBase(BaseSchema):
-    license: str  # TEST
+    pass
 
 
 class DoctorCreate(BaseCreate, DoctorBase):

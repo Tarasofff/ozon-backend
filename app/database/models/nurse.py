@@ -13,11 +13,6 @@ if TYPE_CHECKING:
 class Nurse(User):
     __tablename__ = TableNames.NURSE
 
-    # TEST
-    specs: Mapped[str] = mapped_column(
-        String(256), nullable=False, default="test", server_default="test"
-    )
-
     id: Mapped[int] = mapped_column(
         ForeignKey(f"{TableNames.USER}.id", ondelete="CASCADE"), primary_key=True
     )

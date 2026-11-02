@@ -1,6 +1,6 @@
 from typing import Any, Dict
 from pydantic import ConfigDict, model_validator
-from app.infrastructure.security.hash import hash_password_str
+from app.infrastructure.security.hash import hash_password
 
 
 class PasswordHashMixin: # TODO
@@ -13,5 +13,5 @@ class PasswordHashMixin: # TODO
         if pwd is None:
             return values
 
-        values["password"] = hash_password_str(pwd)
+        values["password"] = hash_password(pwd)
         return values

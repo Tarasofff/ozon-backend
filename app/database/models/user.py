@@ -1,24 +1,18 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
 from sqlalchemy import (
     Boolean,
-    ForeignKey,
-    Integer,
     String,
     Date,
     true,
     Enum,
 )
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 from datetime import date
 from app.database.models.base import Base
 from app.database.models.enums.table_names import TableNames
 from app.database.models.enums.user_role import UserRole
 from app.database.models.mixins import IdIntPkMixin, TimestampMixin
 from app.utils.utils import enum_values
-
-if TYPE_CHECKING:
-    from app.database.models import Hospital
 
 
 # JTI
@@ -47,12 +41,6 @@ class User(IdIntPkMixin, TimestampMixin, Base):
     )
 
     password_hash: Mapped[str] = mapped_column(String(length=255), nullable=False)
-
-    hospital_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey(f"{TableNames.HOSPITAL}.id"), nullable=False
-    )
-
-    hospital: Mapped[Hospital] = relationship(back_populates="users")
 
     role: Mapped[UserRole] = mapped_column(
         Enum(

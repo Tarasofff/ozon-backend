@@ -3,7 +3,7 @@ from app.schemas.shared import BaseCreate, BaseRead
 
 
 class NurseBase(BaseSchema):
-    specs: str  # TEST
+    pass
 
 
 class NurseCreate(BaseCreate, NurseBase):

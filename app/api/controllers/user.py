@@ -24,6 +24,6 @@ async def create(
     await user_service.create(register_data)
 
 
-@user_router.get("/roles", status_code=status.HTTP_200_OK, response_model=list[str])
-async def get_user_roles():
-    return [role.value for role in UserRole]
+# @user_router.get("/roles", status_code=status.HTTP_200_OK, response_model=list[str])
+# async def get_user_roles():
+#     return [role.value for role in UserRole]
