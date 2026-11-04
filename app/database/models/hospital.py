@@ -8,7 +8,7 @@ from app.database.models.mixins import IdIntPkMixin, TimestampMixin
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
-    from app.database.models import Address, Cabinet, User
+    from app.database.models import Address, Cabinet
 
 
 class Hospital(IdIntPkMixin, TimestampMixin, Base):
@@ -25,8 +25,6 @@ class Hospital(IdIntPkMixin, TimestampMixin, Base):
     )
 
     cabinets: Mapped[list[Cabinet]] = relationship(back_populates="hospital")
-
-    users: Mapped[list[User]] = relationship(back_populates="hospital")
 
     __table_args__ = (
         UniqueConstraint(

@@ -21,14 +21,14 @@ class PatientBase(BaseModel):
     notes: str | None = None
 
 
-class PatientDiagnose(BaseCreate):
-    id: int  # diagnose id
-    planned_session_count: int
+# class TreatmentPlan(BaseCreate):
+#     diagnose_id: int
+#     planned_session_count: int
 
 
-class PatientCreate(BaseCreate, PatientBase):
-    user_id: int
-    diagnose_ids: Optional[list[PatientDiagnose]]
+# class PatientCreate(BaseCreate, PatientBase):
+#     user_id: int
+#     diagnose_ids: Optional[list[TreatmentPlan]]
 
 
 class PatientRead(PatientBase, BaseRead):

@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, status
-from core.config import routes
-from database.session import get_db_session
-from schemas import AuthResponse, AuthPayload
-from schemas.user import UserRead
-from services.auth import AuthService
+from app.core.config import routes
+from app.database.session import get_db_session
+from app.schemas import AuthResponse, AuthPayload
+from app.schemas.user import UserRead
+from app.services.auth import AuthService
 from sqlalchemy.ext.asyncio import AsyncSession
-from utils.user_mapper import user_to_read
+from app.utils.user_mapper import user_to_read
 
 auth_router = APIRouter(prefix=routes.auth, tags=["Auth"])
 

@@ -1,10 +1,12 @@
 import asyncio
+from app.database.seeders.seeds.hospital_data_seed import HospitalDataSeeder
 from app.database.session import AsyncSessionLocal
 
 
-# sequence matters!!!
 async def async_main():
     async with AsyncSessionLocal() as session:
+
+        await HospitalDataSeeder(session).seed()
 
         print("[DB] Seeders complete")
 

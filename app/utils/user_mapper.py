@@ -1,8 +1,8 @@
-from database.models.doctor import Doctor
-from database.models.nurse import Nurse
-from database.models.user import User
-from schemas.doctor import DoctorRead
-from schemas.nurse import NurseRead
+from app.database.models.doctor import Doctor
+from app.database.models.nurse import Nurse
+from app.database.models.user import User
+from app.schemas.doctor import DoctorRead
+from app.schemas.nurse import NurseRead
 
 
 def user_to_read(user: User) -> DoctorRead | NurseRead:
