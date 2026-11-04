@@ -6,7 +6,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.models.base import Base
 from app.database.models.enums import TableNames, SessionStatus
 from app.database.models.mixins import TimestampMixin, IdIntPkMixin
-from app.utils.utils import enum_values
+from app.utils.enum_utils import enum_values
 
 if TYPE_CHECKING:
     from app.database.models import Nurse, Post, TreatmentPlan

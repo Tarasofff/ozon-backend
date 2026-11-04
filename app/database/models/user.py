@@ -12,7 +12,7 @@ from app.database.models.base import Base
 from app.database.models.enums.table_names import TableNames
 from app.database.models.enums.user_role import UserRole
 from app.database.models.mixins import IdIntPkMixin, TimestampMixin
-from app.utils.utils import enum_values
+from app.utils.enum_utils import enum_values
 
 
 # JTI

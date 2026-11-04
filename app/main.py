@@ -4,7 +4,7 @@ from app.api.exceptions.handlers import register_exception_handlers
 from app.api.router import api_router
 from app.core.config import routes
 from app.core.logger.logging import setup_logging
-from app.utils.utils import log_registered_routes
+from app.utils.fastapi_utils import log_registered_routes
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import app_config
 

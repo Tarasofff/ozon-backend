@@ -1,31 +1,17 @@
 from fastapi import APIRouter, Depends, status
-from app.core.config import routes
-from app.database.models.doctor import Doctor
-from app.database.models.nurse import Nurse
-from app.database.models.user import User
-from app.database.session import get_db_session
-from app.schemas import AuthResponse, AuthPayload
-from app.schemas.doctor import DoctorRead
-from app.schemas.nurse import NurseRead
-from app.schemas.user import UserRead
-from app.services.auth import AuthService
+from core.config import routes
+from database.session import get_db_session
+from schemas import AuthResponse, AuthPayload
+from schemas.user import UserRead
+from services.auth import AuthService
 from sqlalchemy.ext.asyncio import AsyncSession
+from utils.user_mapper import user_to_read
 
 auth_router = APIRouter(prefix=routes.auth, tags=["Auth"])
 
 
 def get_auth_service(db: AsyncSession = Depends(get_db_session)) -> AuthService:
     return AuthService(session=db)
-
-
-def user_to_read(user: User) -> DoctorRead | NurseRead:
-    if isinstance(user, Doctor):
-        return DoctorRead.model_validate(user)
-
-    if isinstance(user, Nurse):
-        return NurseRead.model_validate(user)
-
-    raise TypeError(f"Unsupported user type: {type(user).__name__}")
 
 
 @auth_router.post("/login", status_code=status.HTTP_200_OK, response_model=AuthResponse)
